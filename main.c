@@ -1,3 +1,4 @@
+
 //-*- coding: utf-8 -*-
 //******************************************************************************
 // Обозначение: main.c 				       
@@ -12,6 +13,7 @@
 #include <math.h>
 
 #include "def_types.h"
+#include "readWavFuncs.h"
 
 
 /*
@@ -34,10 +36,19 @@ int main(int argc, char** argv) {
     printf("OPEN FILE [%s] is OK \n", fin_name);
   }
   
-  
-    //Здесь будет Ваш код
+  t_wavhdr header;
+  readHeader(&header, f_in);
 
-  
+ 
+  int N = 512;
+  int data_portion[N];
+
+  readData(&data_portion[0], N, f_in );
+
+//  int i;
+//  for( i = 0; i<10; i++)
+//    printf("%i\n",data_portion[i] );
+
   fclose(f_in);
   
   return 0;
