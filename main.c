@@ -12,6 +12,7 @@
 #include <math.h>
 
 #include "def_types.h"
+#include "readWavFuncs.h"
 
 
 /*
@@ -34,10 +35,17 @@ int main(int argc, char** argv) {
     printf("OPEN FILE [%s] is OK \n", fin_name);
   }
   
-  
-    //Здесь будет Ваш код
+  //Здесь будет Ваш код
+  t_wavhdr* header;
+  readHeader(header, f_in);
 
-  
+  int N = 512;
+  float* data_portion = (float*)malloc(N*sizeof(float));
+
+  readData(data_portion, N, f_in );
+
+  free(data_portion);
+
   fclose(f_in);
   
   return 0;
