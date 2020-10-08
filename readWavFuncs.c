@@ -22,12 +22,6 @@ void readHeader(t_wavhdr* header, FILE* f_in){
 
   fread(header, sizeof(t_wavhdr), 1, f_in);
   
-<<<<<<< HEAD
-=======
-  //Здесь будет Ваш код
-  fread(header, sizeof(t_wavhdr), 1, f_in);
-  
->>>>>>> cee4e710a37f95a2dafbd9c35c72b5f8973653d9
   //пример печати параметров wav-файла
 
   //printf("***** Parametrs of WAV-file [%s] *****\n", fin_name);
