@@ -18,6 +18,6 @@
 
 void readHeader(t_wavhdr* header, FILE* f_in);
 
-void readData(float* data_portion, int N, FILE* f_in );
+void readData(int* data_portion, int N, FILE* f_in );
 
 #endif  
