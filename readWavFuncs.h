@@ -18,6 +18,10 @@
 
 void readHeader(t_wavhdr* header, FILE* f_in);
 
-void readData(int* data_portion, int N, FILE* f_in );
+void readData(float* data_portion, int N, FILE* f_in );
+
+void calcPortions(int* portions_info, t_wavhdr* header, int N);
+
+int bitsToBytes(int bitsPerSample);
 
 #endif  

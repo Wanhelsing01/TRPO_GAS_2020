@@ -35,19 +35,30 @@ int main(int argc, char** argv) {
   } else {
     printf("OPEN FILE [%s] is OK \n", fin_name);
   }
-  
+
+  // Reading a header of file  
   t_wavhdr header;
   readHeader(&header, f_in);
 
- 
   int N = 512;
-  int data_portion[N];
+  // Calculate the number of portions and the tail size
+  int portions_info[2]; //[PortionQuantity, TailSize]
+  calcPortions(&portions_info[0], &header, N);
 
-  readData(&data_portion[0], N, f_in );
+  // Reading portions till the end in cycle
+  float data_portion[N];
+  for(int i = 0; i < portions_info[0]; ++i){
+      readData(&data_portion[0], N, f_in );
+  }
 
-//  int i;
-//  for( i = 0; i<10; i++)
-//    printf("%i\n",data_portion[i] );
+  // Reading tail
+  if (portions_info[1] > 0) {
+    memset(data_portion, 0.0, sizeof data_portion);
+    readData(&data_portion[0], portions_info[1], f_in );
+  }
+
+  //float data_portion[N];
+  //readData(&data_portion[0], N, f_in );
 
   fclose(f_in);
   
