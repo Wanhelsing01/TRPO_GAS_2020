@@ -47,11 +47,31 @@ void readHeader(t_wavhdr* header, FILE* f_in){
 
 
 //читает из файла f_in порцию данных размером N в массив data_portion.
-void readData(int* data_portion, int N, FILE* f_in ){
+void readData(float* data_portion, int N, FILE* f_in ){
   
   char* fname = "readData";
 
-  fread(data_portion, sizeof(int), N, f_in);
+  int i, tmp;
+  for (i = 0; i < N; i++){
+    fread(&tmp, sizeof(int), 1, f_in);
+    data_portion[i]=(float)tmp;
+  } 
 
   return;
+}
+
+// Return the number of portions and the tail size
+void calcPortions(int* portions_info, t_wavhdr* header, int N){
+
+  int bytesPerSample = bitsToBytes(header->bitsPerSample);
+  int sampleNumber = header->subchunk2Size/bytesPerSample;
+  portions_info[0] = sampleNumber/N; //number of portions without tail
+  portions_info[1] = sampleNumber%N; //size of tail
+  
+  return;
+}
+
+int bitsToBytes(int bits){
+
+  return bits/8;
 }
