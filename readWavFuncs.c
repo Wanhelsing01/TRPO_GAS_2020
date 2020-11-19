@@ -47,14 +47,14 @@ void readHeader(t_wavhdr* header, FILE* f_in){
 
 
 //читает из файла f_in порцию данных размером N в массив data_portion.
-void readData(float* data_portion, int N, FILE* f_in ){
+void readData(double* data_portion, int N, FILE* f_in ){
   
   char* fname = "readData";
 
   int i, tmp;
   for (i = 0; i < N; i++){
     fread(&tmp, sizeof(int), 1, f_in);
-    data_portion[i]=(float)tmp;
+    data_portion[i]=(double)tmp;
   } 
 
   return;

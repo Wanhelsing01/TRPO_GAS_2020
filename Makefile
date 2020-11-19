@@ -11,10 +11,10 @@ CFLAGS = -g -Wall -MMD
 
 CC_DEFINES	+=  -D_TECH 
 
-all: $(BIN)
+all: $(BIN) 
 
 $(BIN): $(OBJ) 
-	$(CC) $(CFLAGS) $(CC_DEFINES)  $(OBJ) -o $(BIN) -lm
+	$(CC) $(CFLAGS) $(CC_DEFINES)  $(OBJ) -o $(BIN) -lfftw3 -lm
 
 include $(wildcard *.d)
 
@@ -25,3 +25,5 @@ clean:
 	rm -f *.dat *.log *.txt  
 	rm -f *~ \#*\# *.cache log
 
+run:
+	./read_wav
