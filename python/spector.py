@@ -1,3 +1,4 @@
+# #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Created on Sun Nov 22 10:47:18 2020
@@ -17,18 +18,19 @@ import matplotlib.pyplot as plt
 
 if (__name__ ==  '__main__'):
 ###
-
     data = np.loadtxt('output.dat')
-    datasize = len(data)
-    arr_n = np.arange(datasize)
-    x = arr_n * (24000/datasize) ## значения по оси X
+    datasize = 2*(len(data)-1) # в файл то записано всего N/2+1 отсчётов спектра
+    arr_n = np.arange(datasize/2) # а частотных каналов N/2
+    fd = 24000/2 #!! значение f_d из заголовка делим пополам (это особенность генерации данных wav-файлов)
+    
+    x = arr_n * (fd/datasize) ## значения по оси X
     fig1, ax1 = plt.subplots()
     
-    ax1.plot(x, data)
+    ax1.plot(x, data[0:len(arr_n)]) # должен быть такой же размер как и по оси x 
     #ax1.set_yscale('linear') ## масштаб по оси Y
 
     # Подписи
-    ax1.set_title('DFT ton_signal N = 512')
+    ax1.set_title(f'DFT ton_signal N = {datasize}') # простой способ вывести значение переменной в форматированной строке
     ax1.set_xlabel('Частота')
     ax1.set_ylabel('Амплитуда')
     

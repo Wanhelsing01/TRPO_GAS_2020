@@ -1,4 +1,3 @@
-
 //-*- coding: utf-8 -*-
 //******************************************************************************
 // Обозначение: main.c 				       
@@ -52,7 +51,7 @@ int main(int argc, char** argv) {
 
   readData(&data_portion[0], N, f_in);
   
-  char* f_out_name = "output.dat";
+  char* f_out_name = "python/output.dat";
   FILE* f_out = fopen(f_out_name, "wb");
   if(f_out == NULL){
     printf("ERROR in OPEN FILE [%s] \n", f_out_name);
