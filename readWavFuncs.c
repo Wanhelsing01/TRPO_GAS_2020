@@ -67,6 +67,8 @@ void calcPortions(int* portions_info, t_wavhdr* header, int N){
   int sampleNumber = header->subchunk2Size/bytesPerSample;
   portions_info[0] = sampleNumber/N; //number of portions without tail
   portions_info[1] = sampleNumber%N; //size of tail
+
+  printf("num of pors = %i, tail = %i", portions_info[0], portions_info[1]);
   
   return;
 }

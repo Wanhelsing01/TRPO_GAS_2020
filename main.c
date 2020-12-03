@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
   t_wavhdr header;
   readHeader(&header, f_in);
 
-  int N = 512;
+  int N = 1024;
 
 
   // Calculate the number of portions and the tail size
