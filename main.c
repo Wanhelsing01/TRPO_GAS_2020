@@ -48,7 +48,6 @@ int main(int argc, char** argv) {
   t_wavhdr header;
   readHeader(&header, f_in);
 struct timeval tv_start, tv_end;
-  gettimeofday(&tv_start, NULL);
   
   
   int N = 1024;
@@ -61,13 +60,16 @@ struct timeval tv_start, tv_end;
   int halfN = N;
   double acc[halfN]; 
   memset(acc, 0.0, sizeof acc);
-  
-  // Reading portions + FFT + accumulation till the end in cycle
+
   int i; double data_portion[N]; double sq[halfN]; 
+   gettimeofday(&tv_start, NULL);
+      fftsq(&data_portion[0], &sq[0], halfN);
+
+  gettimeofday(&tv_end, NULL);
+  // Reading portions + FFT + accumulation till the end in cycle
   for(i = 0; i < portions_info[0]; ++i){
       readData(&data_portion[0], N, f_in );
 
-      fftsq(&data_portion[0], &sq[0], halfN);
  
       accumulation(&acc[0], &sq[0], halfN);
   }
@@ -88,7 +90,6 @@ struct timeval tv_start, tv_end;
 
   fclose(f_in);
   fclose(f_out);
-  gettimeofday(&tv_end, NULL);
   printf("Time elapsed for programm: %ld microsecs \n", (long int)((tv_end.tv_sec-tv_start.tv_sec)*1000000 + (tv_end.tv_usec - tv_start.tv_usec)));
     
   return 0;
