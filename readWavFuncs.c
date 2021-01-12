@@ -47,6 +47,7 @@ void readHeader(t_wavhdr* header, FILE* f_in){
 //читает из файла f_in порцию данных размером N в массив data_portion.
 void readData(double* data_portion, int N, FILE* f_in ){
 
+<<<<<<< HEAD
   int i, tmp;
   for (i = 0; i < N; i++){
     fread(&tmp, sizeof(int), 1, f_in);
@@ -61,6 +62,22 @@ void calcPortions(int* portions_info, t_wavhdr* header, int N){
 
   int bytesPerSample = bitsToBytes(header->bitsPerSample);
   int sampleNumber = header->subchunk2Size/(2*bytesPerSample); // моё предположение - subchunk2Size в два раза больше фактического
+=======
+  short int i, tmp;
+  for (i = 0; i < N; i++){
+    fread(&tmp, sizeof(short int), 1, f_in);
+    data_portion[i]=(double)tmp;
+  } 
+
+  return;
+}
+
+// Return the number of portions and the tail size
+void calcPortions(int* portions_info, t_wavhdr* header, int N){
+
+  int bytesPerSample = bitsToBytes(header->bitsPerSample);
+  int sampleNumber = header->subchunk2Size/(bytesPerSample); // моё предположение - subchunk2Size в два раза больше фактического
+>>>>>>> 24ea634e457da5cc95e9ee851af80a550fe7c8b7
   portions_info[0] = sampleNumber/N; //number of portions without tail
   portions_info[1] = sampleNumber%N; //size of tail
   
@@ -68,10 +85,17 @@ void calcPortions(int* portions_info, t_wavhdr* header, int N){
 }
 
 int bitsToBytes(int bits){
+<<<<<<< HEAD
 
   return bits/8;
 }
 
+=======
+
+  return bits/8;
+}
+
+>>>>>>> 24ea634e457da5cc95e9ee851af80a550fe7c8b7
 void fftsq(double* data_portion, double* sq, int sqsize){
   fftw_complex out[sqsize];
   fftw_plan plan;
@@ -79,6 +103,7 @@ void fftsq(double* data_portion, double* sq, int sqsize){
   plan = fftw_plan_dft_r2c_1d((sqsize-1)*2, data_portion, out,  FFTW_ESTIMATE);// FFTW_ESTIMATE or FFTW_MEASURE
   
   fftw_execute(plan);
+<<<<<<< HEAD
 
   fftw_destroy_plan(plan);
   
@@ -86,6 +111,16 @@ void fftsq(double* data_portion, double* sq, int sqsize){
   for(j = 0; j < sqsize; j++){
     sq[j] = sqrt(out[j][0]*out[j][0]+out[j][1]*out[j][1]);
   }
+=======
+
+  int j;
+  for(j = 0; j < sqsize; j++){
+    sq[j] = sqrt(out[j][0]*out[j][0]+out[j][1]*out[j][1]);
+  }
+
+  fftw_destroy_plan(plan);
+  
+>>>>>>> 24ea634e457da5cc95e9ee851af80a550fe7c8b7
 }
 
 void accumulation(double* acc, double* sq, int sqsize){
